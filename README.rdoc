@@ -1,0 +1,14 @@
+= Alarma 
+
+== About
+This project is for testing and applying massive data considering climate change over the last couple of years. 
+For realizing this huge database, we will be using Rails 3 in combination with MySQL.
+
+- Data provided by ALARM - monthly observed and scenario climate data  
+- Source: http://www.alarmproject.net/climate/climate/
+- Status: 1 March 2011
+
+
+== Team
+(c) [Tom](https://github.com/mindbreaker) and [Terry](https://github.com/the-resa)
+
