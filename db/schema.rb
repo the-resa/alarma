@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(:version => 20111213190525) do
   end
 
   create_table "values", :force => true do |t|
-    t.integer  "zone",       :default => 0
-    t.integer  "scenario",   :default => 0
+    t.integer  "zone",       :default => 1
+    t.integer  "scenario",   :default => 1
     t.boolean  "var"
     t.float    "result"
     t.integer  "moment_id"

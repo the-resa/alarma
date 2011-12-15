@@ -3,19 +3,19 @@ class Value < ActiveRecord::Base
   belongs_to :moment
 
   ZONES = {
-    :europe => 0,
-    :australia => 1,
-    :amerika => 2
+    :europe => 1,
+    :australia => 2,
+    :amerika => 3
   }
 
   SCENARIOS = {
-    :bambu => 0,
-    :gras => 1,
-    :sedg => 2
+    :bambu => 1,
+    :gras => 2,
+    :sedg => 3
   }
 
-  validates :zone, :presence => true, :inclusion => {:in => ZONES}
-  validates :scenario, :presence => true, :inclusion => {:in => SCENARIOS}
-  validates :var, :presence => true
+  validates :zone, :numericality => {:greater_than => 0, :less_than => 4}
+  validates :scenario, :numericality => {:greater_than => 0, :less_than => 4}
+  validates :var, :inclusion => {:in => [true, false]}
   validates :result, :presence => true
 end

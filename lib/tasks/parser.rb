@@ -1,33 +1,37 @@
 module Alarma
   class Parser
+    require 'active_record'
 
     def initialize
       @start_year = 0
       @multi = 1            # Multiplikator
-      @zone = "Europa"
+      @zone = Value::ZONES[:europe]
       @months ||= []          # All months of a year
       @scenario = @x = @y = @start_time = @stop_time = 0
-      
+      raise "Error: Files have already been imported and database is fully loaded!" if Coordinate.count != 0
+
       read
     end
 
     private
 
     def read
-      
       start_timer
 
-      Dir.glob("db/alarm/*.*") do |file|
+      dir = (Rails.env.development? || Rails.env.production?) ? "db/alarm/" : "spec/fixtures/"
 
-        debugger "Filename #{File.basename(file)} \n"
-        @variable = File.extname(file)[1..-1]
-        scenario = File.basename(file).split(".")[0]
-        debugger "Szenario: #{scenario}"
+      Dir.glob("#{dir}*.*") do |file|
+        
+        @var = true ? (File.extname(file)[1..-1] == "pre") : false
+        @scenario = File.basename(file).split(".")[0].downcase.to_sym
+        debugger "Filename: #{File.basename(file)} \n"
+        debugger "Szenario: #{@scenario}"
 
         File.readlines(file).each do |line|
+
           if filter = line.match(/(Years=)\s*(\d+)/)
             @start_year = filter[2].to_i
-            debugger "STARTYEAR #{@start_year}"
+            debugger "Startyear: #{@start_year}"
           end
 
           if filter = line.match(/(Multi=)\s*(\d+\.\d+)/)
@@ -36,18 +40,31 @@ module Alarma
           end
 
           if filter = line.match(/Grid-ref=\s*(\d+),\s*(\d+)/)
-            x = filter[1].to_i
-            y = filter[2].to_i
-            debugger "Coordinates #{x} / #{y}"
+            @x = filter[1].to_i
+            @y = filter[2].to_i
+            @coordinate = Coordinate.find_or_create_by_x_and_y(:x => @x, :y => @y)
+            debugger "Coordinates: #{@x} / #{@y}"
           end
 
           if line.match(/^(\s*\d+)/)
             @months = line.split(" ")
             current_month = 0
 
-            debugger "Year #{@start_year}"
             @months.each do |month|
               current_month == 12 ? 1 : (current_month += 1)
+
+              moment = Moment.find_or_create_by_year_and_month(
+                :year => @start_year,
+                :month => current_month)
+              @coordinate.moments << moment
+              
+              moment.values.find_or_create_by_zone_and_scenario_and_var_and_result(
+                :zone => @zone,
+                :scenario => Value::SCENARIOS[@scenario],
+                :var => @var,
+                :result => (month.to_f * @multi).round(1))
+
+              debugger "Year #{@start_year}"
               debugger "Monat #{current_month} Value: #{(month.to_f * @multi).round(1)}"
             end
             @start_year += 1
@@ -68,7 +85,7 @@ module Alarma
 
     def stop_timer
       @stop_time = Time.now
-      debugger "It takes #{@stop_time - @start_time} seconds"
+      puts "It takes #{@stop_time - @start_time} seconds"
     end
   end
 end
