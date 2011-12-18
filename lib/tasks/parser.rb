@@ -3,10 +3,9 @@ module Alarma
     require 'active_record'
 
     def initialize
-      @start_year = 0
-      @multi = 1            # Multiplikator
       @zone = Value::ZONES[:europe]
-      @months ||= []          # All months of a year
+      @multi = 0 # Multiplikator
+      @months ||= [] 
       @scenario = @x = @y = @start_time = @stop_time = 0
       raise "Error: Files have already been imported and database is fully loaded!" if Coordinate.count != 0
 
@@ -42,6 +41,7 @@ module Alarma
           if filter = line.match(/Grid-ref=\s*(\d+),\s*(\d+)/)
             @x = filter[1].to_i
             @y = filter[2].to_i
+            @current_year = @start_year
             @coordinate = Coordinate.find_or_create_by_x_and_y(:x => @x, :y => @y)
             debugger "Coordinates: #{@x} / #{@y}"
           end
@@ -54,7 +54,7 @@ module Alarma
               current_month == 12 ? 1 : (current_month += 1)
 
               moment = Moment.find_or_create_by_year_and_month(
-                :year => @start_year,
+                :year => @current_year,
                 :month => current_month)
               @coordinate.moments << moment
               
@@ -64,10 +64,10 @@ module Alarma
                 :var => @var,
                 :result => (month.to_f * @multi).round(1))
 
-              debugger "Year #{@start_year}"
+              debugger "Year #{@current_year}"
               debugger "Monat #{current_month} Value: #{(month.to_f * @multi).round(1)}"
             end
-            @start_year += 1
+            @current_year += 1
           end
         end
       end
@@ -76,7 +76,7 @@ module Alarma
     end
 
     def debugger message
-      puts "Debugger: #{message} \n"
+      puts "Debugger: #{message} \n" unless Rails.env.test?
     end
 
     def start_timer
