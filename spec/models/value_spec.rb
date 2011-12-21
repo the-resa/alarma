@@ -4,7 +4,7 @@ describe Value do
   it "should have valid associations" do
     should belong_to :coordinate
     should belong_to :moment
-    should have_many :setups
+    should belong_to :setup
   end
 
   it "should have a result set" do

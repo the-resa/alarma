@@ -1,6 +1,6 @@
 class Setup < ActiveRecord::Base
 
-  belongs_to :value
+  has_many :values
 
   ZONES = {
     :europe => 1,

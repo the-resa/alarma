@@ -4,6 +4,7 @@ class CreateValues < ActiveRecord::Migration
       t.float :result
       t.references :coordinate
       t.references :moment
+      t.references :setup
 
       t.timestamps
     end

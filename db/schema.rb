@@ -31,7 +31,6 @@ ActiveRecord::Schema.define(:version => 20111221184439) do
     t.integer  "zone",       :default => 1
     t.integer  "scenario",   :default => 1
     t.boolean  "var"
-    t.integer  "value_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -40,6 +39,7 @@ ActiveRecord::Schema.define(:version => 20111221184439) do
     t.float    "result"
     t.integer  "coordinate_id"
     t.integer  "moment_id"
+    t.integer  "setup_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

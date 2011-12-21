@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe Setup do
+
+  it "should have valid associations" do
+    should have_many :values
+  end
+  
   it "should have all values set" do
     should validate_numericality_of :zone
     should validate_numericality_of :scenario
