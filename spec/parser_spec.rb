@@ -14,13 +14,13 @@ module Alarma
       Parser.new
       Value.all.count.should == 1011 
 
-      Value.first.zone.should == Value::ZONES[:europe]
-      Value.first.scenario.should == Value::SCENARIOS[:bambu]
+      Value.first.zone.should == Setup::ZONES[:europe]
+      Value.first.scenario.should == Setup::SCENARIOS[:bambu]
       Value.first.var.should == true # pre-format
       Value.first.result.should == 191 # (1910 * 0.1)
 
-      Value.last.zone.should == Value::ZONES[:europe]
-      Value.last.scenario.should == Value::SCENARIOS[:sedg]
+      Value.last.zone.should == Setup::ZONES[:europe]
+      Value.last.scenario.should == Setup::SCENARIOS[:sedg]
       Value.last.var.should == false # tmp-format
       Value.last.result.should == 8.9 # (89 * 0.1)
     end

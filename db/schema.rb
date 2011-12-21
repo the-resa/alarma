@@ -11,18 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111213190525) do
+ActiveRecord::Schema.define(:version => 20111221184439) do
 
   create_table "coordinates", :force => true do |t|
     t.integer  "x"
     t.integer  "y"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "coordinates_moments", :id => false, :force => true do |t|
-    t.integer "coordinate_id"
-    t.integer "moment_id"
   end
 
   create_table "moments", :force => true do |t|
@@ -32,11 +27,18 @@ ActiveRecord::Schema.define(:version => 20111213190525) do
     t.datetime "updated_at"
   end
 
-  create_table "values", :force => true do |t|
+  create_table "setups", :force => true do |t|
     t.integer  "zone",       :default => 1
     t.integer  "scenario",   :default => 1
     t.boolean  "var"
+    t.integer  "value_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "values", :force => true do |t|
     t.float    "result"
+    t.integer  "coordinate_id"
     t.integer  "moment_id"
     t.datetime "created_at"
     t.datetime "updated_at"
