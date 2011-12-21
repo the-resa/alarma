@@ -60,6 +60,9 @@ module Alarma
       Moment.first.year.should == 2001
       Moment.first.month.should == 1
       Moment.first.coordinates.uniq.count.should == 2
+
+      m = Moment.find_by_year_and_month(2002,8)
+      m.coordinates.uniq.count.should == 2
       
       Moment.last.year.should == 2004
       Moment.last.month.should == 12
