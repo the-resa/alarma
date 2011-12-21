@@ -5,8 +5,6 @@ class CreateValues < ActiveRecord::Migration
       t.references :coordinate
       t.references :moment
       t.references :setup
-
-      t.timestamps
     end
   end
 end

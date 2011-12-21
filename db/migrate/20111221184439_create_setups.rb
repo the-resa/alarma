@@ -4,8 +4,6 @@ class CreateSetups < ActiveRecord::Migration
       t.integer :zone, :default => Setup::ZONES[:europe]
       t.integer :scenario, :default => Setup::SCENARIOS[:bambu]
       t.boolean :var
-
-      t.timestamps
     end
   end
 end

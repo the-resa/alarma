@@ -14,34 +14,26 @@
 ActiveRecord::Schema.define(:version => 20111221184439) do
 
   create_table "coordinates", :force => true do |t|
-    t.integer  "x"
-    t.integer  "y"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "x"
+    t.integer "y"
   end
 
   create_table "moments", :force => true do |t|
-    t.integer  "year"
-    t.integer  "month"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "year"
+    t.integer "month"
   end
 
   create_table "setups", :force => true do |t|
-    t.integer  "zone",       :default => 1
-    t.integer  "scenario",   :default => 1
-    t.boolean  "var"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer "zone",     :default => 1
+    t.integer "scenario", :default => 1
+    t.boolean "var"
   end
 
   create_table "values", :force => true do |t|
-    t.float    "result"
-    t.integer  "coordinate_id"
-    t.integer  "moment_id"
-    t.integer  "setup_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.float   "result"
+    t.integer "coordinate_id"
+    t.integer "moment_id"
+    t.integer "setup_id"
   end
 
 end
