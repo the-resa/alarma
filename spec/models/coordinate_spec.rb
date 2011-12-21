@@ -3,10 +3,11 @@ require "spec_helper"
 describe Coordinate do
   it "should have valid associations" do
     should have_and_belong_to_many :moments
-    Coordinate.new(:x => 123, :y => "").should_not be_valid
+    should have_many(:values).through(:moments)
   end
 
   it "should have the x and y values set" do
+    Coordinate.new(:x => 123, :y => "").should_not be_valid
     should validate_presence_of :x
     should validate_presence_of :y
     should validate_numericality_of :x
