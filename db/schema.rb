@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(:version => 20111221184439) do
   create_table "setups", :force => true do |t|
     t.integer "zone",     :default => 1
     t.integer "scenario", :default => 1
-    t.boolean "var"
+    t.integer "variable", :default => 1
   end
 
   create_table "values", :force => true do |t|

@@ -9,8 +9,7 @@ describe Setup do
   it "should have all values set" do
     should validate_numericality_of :zone
     should validate_numericality_of :scenario
-    should allow_value(false).for(:var)
-    should allow_value(true).for(:var)
+    should validate_numericality_of :variable
   end
 
   it "should use correct constants for all zones" do
@@ -25,9 +24,18 @@ describe Setup do
     Setup::SCENARIOS[:sedg].should == 3
   end
 
+  it "should use correct constants for all variables" do
+    Setup::VARIABLES[:pre].should == 1
+    Setup::VARIABLES[:tmp].should == 2
+    Setup::VARIABLES[:gdd].should == 3
+  end
+
   it "should create a new instance of a setup" do
     Setup.all.count.should == 0
-    Setup.create!(:zone => Setup::ZONES[:amerika], :scenario => Setup::SCENARIOS[:sedg], :var => false)
+    Setup.create!(
+      :zone => Setup::ZONES[:amerika],
+      :scenario => Setup::SCENARIOS[:sedg],
+      :variable => Setup::VARIABLES[:pre])
     Setup.all.count.should == 1
   end
 end

@@ -21,12 +21,12 @@ module Alarma
 
       Dir.glob("#{dir}*.*").sort.each do |file|
         
-        @var = true ? (File.extname(file)[1..-1] == "pre") : false
         @scenario = File.basename(file).split(".")[0].downcase.to_sym
-        @setup = Setup.find_or_create_by_zone_and_scenario_and_var(
+        @variable = File.extname(file)[1..-1].downcase.to_sym
+        @setup = Setup.find_or_create_by_zone_and_scenario_and_variable(
                 :zone => @zone,
                 :scenario => Setup::SCENARIOS[@scenario],
-                :var => @var)
+                :variable => Setup::VARIABLES[@variable])
         debugger "Filename: #{File.basename(file)} \n"
         debugger "Szenario: #{@scenario}"
 

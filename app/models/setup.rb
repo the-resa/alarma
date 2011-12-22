@@ -14,7 +14,13 @@ class Setup < ActiveRecord::Base
     :sedg => 3
   }
 
+  VARIABLES = {
+    :pre => 1,
+    :tmp => 2,
+    :gdd => 3
+  }
+
   validates :zone, :numericality => {:greater_than => 0, :less_than => 4}
   validates :scenario, :numericality => {:greater_than => 0, :less_than => 4}
-  validates :var, :inclusion => {:in => [true, false]}
+  validates :variable, :numericality => {:greater_than => 0, :less_than => 4}
 end

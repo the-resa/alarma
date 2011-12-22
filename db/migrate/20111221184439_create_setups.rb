@@ -3,7 +3,7 @@ class CreateSetups < ActiveRecord::Migration
     create_table :setups do |t|
       t.integer :zone, :default => Setup::ZONES[:europe]
       t.integer :scenario, :default => Setup::SCENARIOS[:bambu]
-      t.boolean :var
+      t.integer :variable, :default => Setup::VARIABLES[:pre]
     end
   end
 end
