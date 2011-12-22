@@ -19,7 +19,7 @@ module Alarma
 
       dir = (Rails.env.development? || Rails.env.production?) ? "db/alarm/" : "spec/fixtures/"
 
-      Dir.glob("#{dir}*.*") do |file|
+      Dir.glob("#{dir}*.*").sort.each do |file|
         
         @var = true ? (File.extname(file)[1..-1] == "pre") : false
         @scenario = File.basename(file).split(".")[0].downcase.to_sym
