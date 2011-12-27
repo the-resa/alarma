@@ -42,7 +42,7 @@ module Alarma
             debugger "Multi: #{@multi}"
           end
 
-          if filter = line.match(/Grid-ref=\s*(\d+),\s*(\d+)/)
+          if filter = line.match(/Grid-ref=\s*(\d+),\s*(\d+)/) 
             @x = filter[1].to_i
             @y = filter[2].to_i
             @current_year = @start_year
@@ -54,25 +54,32 @@ module Alarma
             @months = line.split(" ")
             current_month = 0
 
-            @months.each do |month|
-              current_month == 12 ? 1 : (current_month += 1)
+            ActiveRecord::Base.transaction do
+              @months.each do |month|
+                current_month == 12 ? 1 : (current_month += 1)
 
-              moment = Moment.find_or_create_by_year_and_month(
-                :year => @current_year,
-                :month => current_month)
-              
-              value = Value.find_or_create_by_result(
-                :result => (month.to_f * @multi).round(1))
+                moment = Moment.find_or_create_by_year_and_month(
+                  :year => @current_year,
+                  :month => current_month)
 
-              moment.values << value
-              @coordinate.values << value
-              @setup.values << value
+                value = Value.find_or_create_by_result(:result => (month.to_f * @multi).round(1))
 
-              debugger "Year #{@current_year}"
-              debugger "Monat #{current_month} Value: #{(month.to_f * @multi).round(1)}"
+                # SQL statement instead of ActiveRecord for better performance
+                # ActiveRecord syntax:
+                # moment.values << value, @coordinate.values << value, @setup.values << value
+                ActiveRecord::Base.connection.execute("UPDATE `values`
+                  SET moment_id = #{moment.id},
+                      coordinate_id = #{@coordinate.id},
+                      setup_id = #{@setup.id}
+                  WHERE `values`.id = #{value.id};")
+
+                debugger "Year #{@current_year}"
+                debugger "Monat #{current_month} Value: #{(month.to_f * @multi).round(1)}"
+              end
             end
             @current_year += 1
           end
+
         end
       end
 

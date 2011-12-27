@@ -62,16 +62,27 @@ module Alarma
 
     it "should create the correct setup, coordinate and moment for a value" do
       Parser.new
-      v = Value.first
-      v.setup.zone == Setup::ZONES[:europe]
-      v.setup.scenario == Setup::SCENARIOS[:bambu]
-      v.setup.variable == Setup::VARIABLES[:gdd]
+      v_1 = Value.first
+      v_1.setup.zone == Setup::ZONES[:europe]
+      v_1.setup.scenario == Setup::SCENARIOS[:bambu]
+      v_1.setup.variable == Setup::VARIABLES[:gdd]
 
-      v.coordinate.x.should == 4
-      v.coordinate.y.should == 109
+      v_1.coordinate.x.should == 4
+      v_1.coordinate.y.should == 109
 
-      v.moment.year.should == 2001
-      v.moment.month.should == 1
+      v_1.moment.year.should == 2001
+      v_1.moment.month.should == 1
+
+      v_2 = Value.last
+      v_2.setup.zone == Setup::ZONES[:europe]
+      v_2.setup.scenario == Setup::SCENARIOS[:sedg]
+      v_2.setup.variable == Setup::VARIABLES[:tmp]
+
+      v_2.coordinate.x.should == 6
+      v_2.coordinate.y.should == 107
+
+      v_2.moment.year.should == 2004
+      v_2.moment.month.should == 12
     end
 
     it "should get the correct values for a coordinate and moment" do
