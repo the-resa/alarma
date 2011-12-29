@@ -69,5 +69,12 @@ module Alarma
       Moment.last.coordinates.uniq.count.should == 2
     end
 
+    it "should give me the values" do
+      Parser.new
+      puts "Moments: #{Moment.all.count}"
+      puts "Coordinates: #{Coordinate.all.count}"
+      puts "Values: #{Value.all.count}"
+    end
+
   end
 end
