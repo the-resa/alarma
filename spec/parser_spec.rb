@@ -1,28 +1,12 @@
 require "spec_helper"
 require_relative "../lib/tasks/parser.rb"
 
-module Alarma 
+module Alarma
   describe Parser do
 
     it "should raise an error, if data has already been imported" do
       Coordinate.stub!(:x => 123, :y => 123)
       lambda { initialize }.should raise_error if Coordinate.count != 0
-    end
-
-    it "should get the correct zone, scenario, variable and result" do
-      Value.all.count.should == 0
-      Parser.new
-      Value.all.count.should == 1011 
-
-      Value.first.zone.should == Value::ZONES[:europe]
-      Value.first.scenario.should == Value::SCENARIOS[:bambu]
-      Value.first.var.should == true # pre-format
-      Value.first.result.should == 191 # (1910 * 0.1)
-
-      Value.last.zone.should == Value::ZONES[:europe]
-      Value.last.scenario.should == Value::SCENARIOS[:sedg]
-      Value.last.var.should == false # tmp-format
-      Value.last.result.should == 8.9 # (89 * 0.1)
     end
 
     it "should create the correct coordinates" do
@@ -37,36 +21,77 @@ module Alarma
       Coordinate.last.y.should == 107
     end
 
-    it "should get the correct moments for a coordinate" do
-      Parser.new
-      Coordinate.first.moments.count == 288 # (4 years * 12 months) * 6 scenarios
-      Coordinate.last.moments.count == 288
-    end
-
-    it "should get the correct year and month for a coordinate" do
-     Parser.new
-     Coordinate.first.moments.first.year.should == 2001
-     Coordinate.first.moments.first.month.should == 1 # January
-     
-     Coordinate.last.moments.last.year.should == 2004
-     Coordinate.last.moments.last.month.should == 12 # December
-    end
-
-    it "should create the correct moments" do
+     it "should create the correct moments" do
       Moment.all.count.should == 0
       Parser.new
       Moment.all.count.should == 48 # (4 years * 12 months)
 
       Moment.first.year.should == 2001
       Moment.first.month.should == 1
-      Moment.first.coordinates.uniq.count.should == 2
+      Moment.first.values.first.result == 53.0 # (53 * 1.0)
+      Moment.first.values.last.result == 5.9 # (59 * 0.1)
 
-      m = Moment.find_by_year_and_month(2002,8)
-      m.coordinates.uniq.count.should == 2
-      
       Moment.last.year.should == 2004
       Moment.last.month.should == 12
-      Moment.last.coordinates.uniq.count.should == 2
+      Moment.last.values.first.result == 127.0 # (127 * 1.0)
+      Moment.last.values.last.result == 8.9 # (89 * 0.1)
+    end
+
+    it "should create the correct setups" do
+      Setup.all.count.should == 0
+      Parser.new
+      Setup.all.count.should == 9 # 1 zone + (3 scenarios * 3 variables)
+
+      Setup.first.zone.should == Setup::ZONES[:europe]
+      Setup.first.scenario.should == Setup::SCENARIOS[:bambu]
+      Setup.first.variable.should == Setup::VARIABLES[:gdd]
+
+      Setup.last.zone.should == Setup::ZONES[:europe]
+      Setup.last.scenario.should == Setup::SCENARIOS[:sedg]
+      Setup.last.variable.should == Setup::VARIABLES[:tmp]
+    end
+
+    it "should create the correct values" do
+      Value.all.count.should == 0
+      Parser.new
+      Value.all.count.should == 595
+
+      Value.first.result.should == 53.0 # (53 * 1.0)
+      Value.last.result.should == 8.9 # (89 * 0.1)
+    end
+
+    it "should create the correct setup, coordinate and moment for a value" do
+      Parser.new
+      v_1 = Value.first
+      v_1.setup.zone == Setup::ZONES[:europe]
+      v_1.setup.scenario == Setup::SCENARIOS[:bambu]
+      v_1.setup.variable == Setup::VARIABLES[:gdd]
+
+      v_1.coordinate.x.should == 4
+      v_1.coordinate.y.should == 109
+
+      v_1.moment.year.should == 2001
+      v_1.moment.month.should == 1
+
+      v_2 = Value.last
+      v_2.setup.zone == Setup::ZONES[:europe]
+      v_2.setup.scenario == Setup::SCENARIOS[:sedg]
+      v_2.setup.variable == Setup::VARIABLES[:tmp]
+
+      v_2.coordinate.x.should == 6
+      v_2.coordinate.y.should == 107
+
+      v_2.moment.year.should == 2004
+      v_2.moment.month.should == 12
+    end
+
+    it "should get the correct values for a coordinate and moment" do
+      Parser.new
+      Coordinate.first.values.count == 432 # (4 years * 12 months) * 9 scenarios
+      Coordinate.last.values.count == 432
+
+      Moment.first.values.count == 18 # (2 values * 9 scenarios)
+      Moment.last.values.count == 18
     end
 
   end

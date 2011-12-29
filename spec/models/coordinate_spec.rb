@@ -2,8 +2,8 @@ require "spec_helper"
 
 describe Coordinate do
   it "should have valid associations" do
-    should have_and_belong_to_many :moments
-    should have_many(:values).through(:moments)
+    should have_many :values
+    Coordinate.new(:x => 123, :y => "").should_not be_valid
   end
 
   it "should have the x and y values set" do
@@ -24,11 +24,11 @@ describe Coordinate do
     Coordinate.new(:x => "abc", :y => "").should_not be_valid
   end
 
-  it "should create a join between coordinates and moments" do
-    m = Moment.create!(:year => 123, :month => 456)
-    m.coordinates.count.should == 0
-    m.coordinates << Coordinate.create!(:x => 8, :y => 8)
-    m.coordinates << Coordinate.create!(:x => 123, :y => 123)
-    m.coordinates.count.should == 2
+  it "should create a join between coordinates and moments called value" do
+    c = Coordinate.create!(:x => 123, :y => 456)
+    c.values.count.should == 0
+    c.values << Value.create!(:result => 111.1)
+    c.values << Value.create!(:result => 222.2)
+    c.values.count.should == 2
   end
 end
