@@ -58,5 +58,6 @@ Alarma::Application.routes.draw do
 
   #/mapval/Mo/Sc/Y/M/all.Out
   match "/mapval/:model/:scenario/:year/:month/:var",
-    :controller => :mapvals, :action => "get_all_values", :via => :get
+    #:controller => :mapvals, :action => "get_all_values", :via => :get
+    :controller => :mapvals, :action => :index
 end
