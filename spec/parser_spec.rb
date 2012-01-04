@@ -31,6 +31,7 @@ module Alarma
       Moment.first.values.first.result == 53.0 # (53 * 1.0)
       Moment.first.values.last.result == 5.9 # (59 * 0.1)
 
+
       Moment.last.year.should == 2004
       Moment.last.month.should == 12
       Moment.last.values.first.result == 127.0 # (127 * 1.0)

@@ -30,8 +30,5 @@ class MapvalsController < ApplicationController
     end
 
     respond_with(data)
-  end
-
-
-  
+  end  
 end

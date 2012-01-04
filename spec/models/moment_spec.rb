@@ -29,4 +29,22 @@ describe Moment do
     m.values << Value.create!(:result => 222.2)
     m.values.count.should == 2
   end
+
+  it "should return clima values" do
+    coord = Coordinate.create!(:x => 9, :y => 9)
+    coord.moments << Moment.create!(:year => 2003, :month => 12)
+    coord.moments.first.values << Value.create!(
+      :zone => Value::ZONES[:europe],
+      :scenario => Value::SCENARIOS[:bambu],
+      :var => true,
+      :result => 11.11)
+
+    data = Moment.data(2003, 12)
+
+    data[coord.x].should be_an(Array)
+    data[coord.y].should be_an(Array)
+    data[coord.x].count.should == data[coord.y].count # (4 years * 12 months) * 6 scenarios
+    data[coord.x][coord.y].should == 11.11
+  end
+  
 end
