@@ -13,9 +13,9 @@ describe Moment do
   end
 
   it "should create a new instance" do
-    Moment.all.count.should == 0
+    moments = Moment.all.count
     Moment.create!(:year => 123, :month => 456)
-    Moment.all.count.should == 1
+    Moment.all.count.should == moments + 1
   end
 
   it "should not create a new instance with wrong params" do

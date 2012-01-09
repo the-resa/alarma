@@ -13,9 +13,9 @@ describe Value do
   end
 
   it "should create a new instance of a value" do
-    Value.all.count.should == 0
+    values = Value.all.count
     Value.create!(:result => 0.123)
-    Value.all.count.should == 1
+    Value.all.count.should == values + 1
   end
 
   it "should not create a new instance with wrong params" do

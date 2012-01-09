@@ -3,7 +3,6 @@ require "spec_helper"
 describe Coordinate do
   it "should have valid associations" do
     should have_many :values
-    Coordinate.new(:x => 123, :y => "").should_not be_valid
   end
 
   it "should have the x and y values set" do
@@ -14,9 +13,9 @@ describe Coordinate do
   end
 
   it "should create a new instance of a coordinate" do
-    Coordinate.all.count.should == 0
+    coordinates = Coordinate.all.count
     Coordinate.create!(:x => 123, :y => 456)
-    Coordinate.all.count.should == 1
+    Coordinate.all.count.should == coordinates + 1
   end
 
   it "should not create a new instance with wrong params" do
