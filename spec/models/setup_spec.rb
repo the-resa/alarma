@@ -31,11 +31,11 @@ describe Setup do
   end
 
   it "should create a new instance of a setup" do
-    Setup.all.count.should == 0
+    setups = Setup.all.count
     Setup.create!(
       :zone => Setup::ZONES[:amerika],
       :scenario => Setup::SCENARIOS[:sedg],
       :variable => Setup::VARIABLES[:pre])
-    Setup.all.count.should == 1
+    Setup.all.count.should == setups + 1
   end
 end
