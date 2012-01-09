@@ -29,6 +29,7 @@ class Moment < ActiveRecord::Base
 
   def self.render_data data
     result = Array.new_2d(258, 228)
+    
     data.each do |d|
       result[d.attributes["x"]][d.attributes["y"]] = d.attributes["result"]
     end
