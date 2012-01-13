@@ -44,6 +44,23 @@ class Moment < ActiveRecord::Base
     data_a
   end
 
+  def self.diff_funct(year_a, year_b, variable=1, funct_a="avg", funct_b="avg")
+    data_a = funct(year_a, variable, funct_a)
+    data_b = funct(year_b, variable, funct_b)
+
+    data_a.each_with_index do |value,x|
+      next if value.nil?
+      value.each_with_index do |v, y|
+        if !data_a[x][y].nil? && !data_b[x][y].nil?
+          data_a[x][y] = data_a[x][y] - data_b[x][y]
+        end
+      end
+    end
+
+    data_a
+
+  end
+
   def self.render_data data
     result = Array.new_2d(258, 228)
     
