@@ -60,4 +60,7 @@ Alarma::Application.routes.draw do
   match "/mapval/:model/:scenario/:year/:month/:var",
     :controller => :mapvals, :action => :index
 
+  match "/mapdiff/:model/:scenario/:year_a/:month_a/:year_b/:month_b/:var",
+    :controller => :mapdiff, :action => :index
+
 end
