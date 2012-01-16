@@ -9,7 +9,7 @@ class MapdiffController < ApplicationController
       :year_b => params[:year_b]
     }
 
-        params[:model].downcase!
+    params[:model].downcase!
     params[:scenario].downcase!
 
     if (FUNCTIONS.include? params[:month_a]) && (FUNCTIONS.include? params[:month_b])

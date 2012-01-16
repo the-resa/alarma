@@ -34,4 +34,33 @@ class Prop < Moment
 
        render_single_data data
    end
+
+    def self.funct_diff(year_a, year_b, variable, function, model, scenario)
+
+      data_a = val_year(year_a, variable, model, scenario)
+      data_b = val_year(year_b, variable, model, scenario)
+
+      if(function == "all")
+        data_a[:min] = data_b[:min] - data_a[:min]
+        data_a[:max] = data_b[:max] - data_a[:max]
+        data_a[:avg] = data_b[:avg] - data_a[:avg]
+        
+        data_a
+      else
+        data_a[function.to_sym] =  data_b[function.to_sym] - data_a[function.to_sym]
+        {function.to_sym => data_a[function.to_sym]}
+      end
+    end
+
+    def self.diff_all(params)
+      data_a = val_month(params[:year_a], params[:month_a], Setup::VARIABLES[params[:var].to_sym], Setup::ZONES[params[:model].to_sym], Setup::SCENARIOS[params[:scenario].to_sym])
+      data_b = val_month(params[:year_b], params[:month_b], Setup::VARIABLES[params[:var].to_sym], Setup::ZONES[params[:model].to_sym], Setup::SCENARIOS[params[:scenario].to_sym])
+
+
+      data_a[:min] = data_b[:min] - data_a[:min] if data_a[:min]
+      data_a[:max] = data_b[:max] - data_a[:max] if data_a[:max]
+      data_a[:avg] = data_b[:avg] - data_a[:avg] if data_a[:avg]
+
+      data_a
+    end
 end

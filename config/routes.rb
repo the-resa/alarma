@@ -65,4 +65,10 @@ Alarma::Application.routes.draw do
 
   match "/propval/:model/:scenario/:year/:month/:var",
     :controller => :propval, :action => :index
+
+  match "/propdiff/:model/:scenario/:year_a/:function_a/:year_b/:function_b/:var", :function_a => /min|max|avg|all/, :function_b => /min|max|avg|all/,
+    :controller => :propdiff, :action => :index
+
+  match "/propdiff/:model/:scenario/:year_a/:month_a/:year_b/:month_b/:var", :month_a => /\d+/, :month_b => /\d+/,
+    :controller => :propdiff, :action => :index
 end

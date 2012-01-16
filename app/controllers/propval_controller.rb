@@ -3,8 +3,8 @@ class PropvalController < ApplicationController
 
   def index
     data = {:pro => :val,
-      :model_name => Setup::ZONES.key(params[:model].to_i),
-      :scenario_name => Setup::SCENARIOS.key(params[:scenario].to_i),
+       :model_name => params[:model],
+      :scenario_name => params[:scenario],
       :year => params[:year],
       :month => params[:month]
     }
