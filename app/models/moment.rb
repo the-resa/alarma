@@ -70,4 +70,10 @@ class Moment < ActiveRecord::Base
     
     result
   end
+
+  def self.render_single_data data
+    data = data.first
+    {:min => data[:min], :max => data[:max], :avg => data[:avg]} if !data.nil?
+  end
 end
+
