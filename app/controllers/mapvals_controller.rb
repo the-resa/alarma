@@ -11,11 +11,16 @@ class MapvalsController < ApplicationController
       :year => params[:year]
     }
 
+    params[:model].downcase!
+    params[:scenario].downcase!
+
+    puts "Scenario #{Setup::ZONES[params[:model]]}"
+
     if FUNCTIONS.include? params[:month]
       if params[:var] == "all"
-        pre = Moment.funct(params[:year], Setup::VARIABLES[:pre] ,params[:month])
-        tmp = Moment.funct(params[:year], Setup::VARIABLES[:tmp] ,params[:month])
-        gdd = Moment.funct(params[:year], Setup::VARIABLES[:gdd] ,params[:month])
+        pre = Moment.funct(params[:year], Setup::VARIABLES[:pre] ,params[:month], Setup::ZONES[params[:model].to_sym], Setup::SCENARIOS[params[:scenario].to_sym])
+        tmp = Moment.funct(params[:year], Setup::VARIABLES[:tmp] ,params[:month], Setup::ZONES[params[:model].to_sym], Setup::SCENARIOS[params[:scenario].to_sym])
+        gdd = Moment.funct(params[:year], Setup::VARIABLES[:gdd] ,params[:month], Setup::ZONES[params[:model].to_sym], Setup::SCENARIOS[params[:scenario].to_sym])
 
         data[:data] = {
           :pre => pre,
@@ -24,7 +29,7 @@ class MapvalsController < ApplicationController
         }
       else
         var = params[:var].to_sym
-        values = Moment.funct(params[:year], Setup::VARIABLES[var] ,params[:month])
+        values = Moment.funct(params[:year], Setup::VARIABLES[var] ,params[:month], Setup::ZONES[params[:model].to_sym], Setup::SCENARIOS[params[:scenario].to_sym])
 
         data[:data] = {"#{params[:var].to_s}" => values}
       end
@@ -33,9 +38,9 @@ class MapvalsController < ApplicationController
     elsif (params[:month].to_i >= 1 && params[:month].to_i <=12)
     
       if params[:var] == "all"
-        pre = Moment.data(params[:year], params[:month], Setup::VARIABLES[:pre])
-        tmp = Moment.data(params[:year], params[:month], Setup::VARIABLES[:tmp])
-        gdd = Moment.data(params[:year], params[:month], Setup::VARIABLES[:gdd])
+        pre = Moment.data(params[:year], params[:month], Setup::VARIABLES[:pre], Setup::ZONES[params[:model].to_sym], Setup::SCENARIOS[params[:scenario].to_sym])
+        tmp = Moment.data(params[:year], params[:month], Setup::VARIABLES[:tmp], Setup::ZONES[params[:model].to_sym], Setup::SCENARIOS[params[:scenario].to_sym])
+        gdd = Moment.data(params[:year], params[:month], Setup::VARIABLES[:gdd], Setup::ZONES[params[:model].to_sym], Setup::SCENARIOS[params[:scenario].to_sym])
 
         data[:data] = {
           :pre => pre,
@@ -44,7 +49,7 @@ class MapvalsController < ApplicationController
         }
       else
         var = params[:var].to_sym
-        values = Moment.data(params[:year], params[:month], Setup::VARIABLES[var])
+        values = Moment.data(params[:year], params[:month], Setup::VARIABLES[var], Setup::ZONES[params[:model].to_sym], Setup::SCENARIOS[params[:scenario].to_sym])
 
         data[:data] = {"#{params[:var].to_s}" => values}
       end

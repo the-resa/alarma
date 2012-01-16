@@ -9,20 +9,24 @@ class MapdiffController < ApplicationController
       :year_b => params[:year_b]
     }
 
+        params[:model].downcase!
+    params[:scenario].downcase!
+
     if (FUNCTIONS.include? params[:month_a]) && (FUNCTIONS.include? params[:month_b])
       if params[:var] == "all"
-        pre = Moment.diff_funct(params[:year_a], params[:year_b], Setup::VARIABLES[:pre], params[:month_a], params[:month_b])
-        tmp = Moment.diff_funct(params[:year_a], params[:year_b], Setup::VARIABLES[:tmp], params[:month_a], params[:month_b])
-        gdd = Moment.diff_funct(params[:year_a], params[:year_b], Setup::VARIABLES[:gdd], params[:month_a], params[:month_b])
+        pre = Moment.diff_funct(params[:year_a], params[:year_b], Setup::VARIABLES[:pre], params[:month_a], params[:month_b], Setup::ZONES[params[:model].to_sym], Setup::SCENARIOS[params[:scenario].to_sym])
+        tmp = Moment.diff_funct(params[:year_a], params[:year_b], Setup::VARIABLES[:tmp], params[:month_a], params[:month_b], Setup::ZONES[params[:model].to_sym], Setup::SCENARIOS[params[:scenario].to_sym])
+        gdd = Moment.diff_funct(params[:year_a], params[:year_b], Setup::VARIABLES[:gdd], params[:month_a], params[:month_b], Setup::ZONES[params[:model].to_sym], Setup::SCENARIOS[params[:scenario].to_sym])
 
         data[:data] = {
           :pre => pre,
           :tmp => tmp,
           :gdd => gdd
         }
+        
       else
         var = params[:var].to_sym
-        values = Moment.diff_funct(params[:year_a], params[:year_b], Setup::VARIABLES[var], params[:month_a], params[:month_b])
+        values = Moment.diff_funct(params[:year_a], params[:year_b], Setup::VARIABLES[var], params[:month_a], params[:month_b], Setup::ZONES[params[:model].to_sym], Setup::SCENARIOS[params[:scenario].to_sym])
         data[:data] = {var => values}
       end
 
@@ -30,9 +34,9 @@ class MapdiffController < ApplicationController
       
     elsif (params[:month_a].to_i >= 1 && params[:month_a].to_i <=12)
       if params[:var] == "all"
-        pre = Moment.diff(params[:year_a], params[:month_a], params[:year_b], params[:month_b], Setup::VARIABLES[:pre])
-        tmp = Moment.diff(params[:year_a], params[:month_a], params[:year_b], params[:month_b], Setup::VARIABLES[:tmp])
-        gdd = Moment.diff(params[:year_a], params[:month_a], params[:year_b], params[:month_b], Setup::VARIABLES[:gdd])
+        pre = Moment.diff(params[:year_a], params[:month_a], params[:year_b], params[:month_b], Setup::VARIABLES[:pre], Setup::ZONES[params[:model].to_sym], Setup::SCENARIOS[params[:scenario].to_sym])
+        tmp = Moment.diff(params[:year_a], params[:month_a], params[:year_b], params[:month_b], Setup::VARIABLES[:tmp], Setup::ZONES[params[:model].to_sym], Setup::SCENARIOS[params[:scenario].to_sym])
+        gdd = Moment.diff(params[:year_a], params[:month_a], params[:year_b], params[:month_b], Setup::VARIABLES[:gdd], Setup::ZONES[params[:model].to_sym], Setup::SCENARIOS[params[:scenario].to_sym])
 
         data[:data] = {
           :pre => pre,
@@ -41,7 +45,7 @@ class MapdiffController < ApplicationController
         }
       else
         var = params[:var].to_sym
-        values = Moment.diff(params[:year_a], params[:month_a], params[:year_b], params[:month_b], Setup::VARIABLES[var])
+        values = Moment.diff(params[:year_a], params[:month_a], params[:year_b], params[:month_b], Setup::VARIABLES[var], Setup::ZONES[params[:model].to_sym], Setup::SCENARIOS[params[:scenario].to_sym])
         data[:data] = {var => values}
       end
 
