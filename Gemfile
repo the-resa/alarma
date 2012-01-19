@@ -19,6 +19,7 @@ group :test do
   gem 'database_cleaner', '0.7.0'
   gem 'shoulda'
   gem 'rspec-rails'
+#  gem "nyan-cat-formatter", "0.0.5"
 end
 
 # Bundle edge Rails instead:

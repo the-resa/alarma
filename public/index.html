@@ -1,241 +1,151 @@
-<!DOCTYPE html>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-  <head>
-    <title>Ruby on Rails: Welcome aboard</title>
-    <style type="text/css" media="screen">
-      body {
-        margin: 0;
-        margin-bottom: 25px;
-        padding: 0;
-        background-color: #f0f0f0;
-        font-family: "Lucida Grande", "Bitstream Vera Sans", "Verdana";
-        font-size: 13px;
-        color: #333;
-      }
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+    <style>
+        body {
+            background-color: #4B7399;
+            font-family: Verdana, Helvetica, Arial;
+            font-size: 14px;
+        }
 
-      h1 {
-        font-size: 28px;
-        color: #000;
-      }
+        a img {
+            border: none;
+        }
 
-      a  {color: #03c}
-      a:hover {
-        background-color: #03c;
-        color: white;
-        text-decoration: none;
-      }
+        a {
+            color: #0000FF;
+        }
 
+        .clear {
+            clear: both;
+            height: 0;
+            overflow: hidden;
+        }
 
-      #page {
-        background-color: #f0f0f0;
-        width: 750px;
-        margin: 0;
-        margin-left: auto;
-        margin-right: auto;
-      }
+        #container {
+            width: 75%;
+            margin: 0 auto;
+            background-color: #FFF;
+            padding: 20px 40px;
+            border: solid 1px black;
+            margin-top: 20px;
+        }
 
-      #content {
-        float: left;
-        background-color: white;
-        border: 3px solid #aaa;
-        border-top: none;
-        padding: 25px;
-        width: 500px;
-      }
+        #flash_notice, #flash_error {
+            padding: 5px 8px;
+            margin: 10px 0;
+        }
 
-      #sidebar {
-        float: right;
-        width: 175px;
-      }
+        #flash_notice {
+            background-color: #CFC;
+            border: solid 1px #6C6;
+        }
 
-      #footer {
-        clear: both;
-      }
+        #flash_error {
+            background-color: #FCC;
+            border: solid 1px #C66;
+        }
 
-      #header, #about, #getting-started {
-        padding-left: 75px;
-        padding-right: 30px;
-      }
+        .fieldWithErrors {
+            display: inline;
+        }
 
+        #errorExplanation {
+            width: 400px;
+            border: 2px solid #CF0000;
+            padding: 0px;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            background-color: #f0f0f0;
+        }
 
-      #header {
-        background-image: url("/assets/rails.png");
-        background-repeat: no-repeat;
-        background-position: top left;
-        height: 64px;
-      }
-      #header h1, #header h2 {margin: 0}
-      #header h2 {
-        color: #888;
-        font-weight: normal;
-        font-size: 16px;
-      }
+        #errorExplanation h2 {
+            text-align: left;
+            font-weight: bold;
+            padding: 5px 5px 5px 15px;
+            font-size: 12px;
+            margin: 0;
+            background-color: #c00;
+            color: #fff;
+        }
 
+        #errorExplanation p {
+            color: #333;
+            margin-bottom: 0;
+            padding: 8px;
+        }
 
-      #about h3 {
-        margin: 0;
-        margin-bottom: 10px;
-        font-size: 14px;
-      }
+        #errorExplanation ul {
+            margin: 2px 24px;
+        }
 
-      #about-content {
-        background-color: #ffd;
-        border: 1px solid #fc0;
-        margin-left: -55px;
-        margin-right: -10px;
-      }
-      #about-content table {
-        margin-top: 10px;
-        margin-bottom: 10px;
-        font-size: 11px;
-        border-collapse: collapse;
-      }
-      #about-content td {
-        padding: 10px;
-        padding-top: 3px;
-        padding-bottom: 3px;
-      }
-      #about-content td.name  {color: #555}
-      #about-content td.value {color: #000}
-
-      #about-content ul {
-        padding: 0;
-        list-style-type: none;
-      }
-
-      #about-content.failure {
-        background-color: #fcc;
-        border: 1px solid #f00;
-      }
-      #about-content.failure p {
-        margin: 0;
-        padding: 10px;
-      }
-
-
-      #getting-started {
-        border-top: 1px solid #ccc;
-        margin-top: 25px;
-        padding-top: 15px;
-      }
-      #getting-started h1 {
-        margin: 0;
-        font-size: 20px;
-      }
-      #getting-started h2 {
-        margin: 0;
-        font-size: 14px;
-        font-weight: normal;
-        color: #333;
-        margin-bottom: 25px;
-      }
-      #getting-started ol {
-        margin-left: 0;
-        padding-left: 0;
-      }
-      #getting-started li {
-        font-size: 18px;
-        color: #888;
-        margin-bottom: 25px;
-      }
-      #getting-started li h2 {
-        margin: 0;
-        font-weight: normal;
-        font-size: 18px;
-        color: #333;
-      }
-      #getting-started li p {
-        color: #555;
-        font-size: 13px;
-      }
-
-
-      #sidebar ul {
-        margin-left: 0;
-        padding-left: 0;
-      }
-      #sidebar ul h3 {
-        margin-top: 25px;
-        font-size: 16px;
-        padding-bottom: 10px;
-        border-bottom: 1px solid #ccc;
-      }
-      #sidebar li {
-        list-style-type: none;
-      }
-      #sidebar ul.links li {
-        margin-bottom: 5px;
-      }
-
-      .filename {
-        font-style: italic;
-      }
+        #errorExplanation ul li {
+            font-size: 12px;
+            list-style: disc;
+        }
     </style>
-    <script type="text/javascript">
-      function about() {
-        info = document.getElementById('about-content');
-        if (window.XMLHttpRequest)
-          { xhr = new XMLHttpRequest(); }
-        else
-          { xhr = new ActiveXObject("Microsoft.XMLHTTP"); }
-        xhr.open("GET","rails/info/properties",false);
-        xhr.send("");
-        info.innerHTML = xhr.responseText;
-        info.style.display = 'block'
-      }
-    </script>
-  </head>
-  <body>
-    <div id="page">
-      <div id="sidebar">
-        <ul id="sidebar-items">
-          <li>
-            <h3>Browse the documentation</h3>
-            <ul class="links">
-              <li><a href="http://guides.rubyonrails.org/">Rails Guides</a></li>
-              <li><a href="http://api.rubyonrails.org/">Rails API</a></li>
-              <li><a href="http://www.ruby-doc.org/core/">Ruby core</a></li>
-              <li><a href="http://www.ruby-doc.org/stdlib/">Ruby standard library</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
+    <div id="container">
+        <h1>Alarma </h1>
 
-      <div id="content">
-        <div id="header">
-          <h1>Welcome aboard</h1>
-          <h2>You&rsquo;re riding Ruby on Rails!</h2>
-        </div>
+        <h2>About</h2>
 
-        <div id="about">
-          <h3><a href="rails/info/properties" onclick="about(); return false">About your application&rsquo;s environment</a></h3>
-          <div id="about-content" style="display: none"></div>
-        </div>
-
-        <div id="getting-started">
-          <h1>Getting started</h1>
-          <h2>Here&rsquo;s how to get rolling:</h2>
-
-          <ol>
+        <p>This project is for testing and applying massive data considering climate
+            change over the last couple of years. For realizing this huge database, we
+            will be using Rails 3 in combination with MySQL.</p>
+        <ul>
             <li>
-              <h2>Use <code>rails generate</code> to create your models and controllers</h2>
-              <p>To see all available options, run it without parameters.</p>
+                <p>Data provided by ALARM - monthly observed and scenario climate data</p>
             </li>
-
             <li>
-              <h2>Set up a default route and remove <span class="filename">public/index.html</span></h2>
-              <p>Routes are set up in <span class="filename">config/routes.rb</span>.</p>
-            </li>
+                <p>Source: <a href="http://www.alarmproject.net/climate/climate">www.alarmproject.net/climate/climate</a>/</p>
 
+            </li>
             <li>
-              <h2>Create your database</h2>
-              <p>Run <code>rake db:create</code> to create your database. If you're not using SQLite (the default), edit <span class="filename">config/database.yml</span> with your username and password.</p>
+                <p>Status: 1 March 2011</p>
             </li>
-          </ol>
-        </div>
-      </div>
+        </ul><h2>Data</h2>
 
-      <div id="footer">&nbsp;</div>
+        <p>ALARM observed and scenario climate data Assessing LArge scale Risks for
+            biodiversity with tested Methods</p>
+
+        <p><a href="http://www.alarmproject.net/climate/climate">www.alarmproject.net/climate/climate</a>/</p>
+
+        <p>The ALARM climate data are made available free of charge for non-commercial
+            uses provided that the sources are properly acknowledged: The ALARM climate
+            observations and scenarios are described by Fronzek et al. (2011), with
+            additional methodological information provided in Mitchell et al (2004).
+            The data are downloadable from: <a href="http://www.alarmproject.net/alarm">www.alarmproject.net/alarm</a></p>
+
+        <p>*** pre … precipitation [mm] <a href="http://www.alarmproject.net/climate/climate/monthly/GRAS.A1FI.HadCM3.2001-2100.pre.tgz">www.alarmproject.net/climate/climate/monthly/GRAS.A1FI.HadCM3.2001-2100.pre.tgz</a>
+            <a href="http://www.alarmproject.net/climate/climate/monthly/SEDG.B1.HadCM3.2001-2100.pre.tgz">www.alarmproject.net/climate/climate/monthly/SEDG.B1.HadCM3.2001-2100.pre.tgz</a>
+            <a href="http://www.alarmproject.net/climate/climate/monthly/BAMBU.A2.HadCM3.2001-2100.pre.tgz">www.alarmproject.net/climate/climate/monthly/BAMBU.A2.HadCM3.2001-2100.pre.tgz</a></p>
+
+        <p>*** tmp … near-surface temperature [° Celsius] <a href="http://www.alarmproject.net/climate/climate/monthly/GRAS.A1FI.HadCM3.2001-2100.tmp.tgz">www.alarmproject.net/climate/climate/monthly/GRAS.A1FI.HadCM3.2001-2100.tmp.tgz</a>
+            <a href="http://www.alarmproject.net/climate/climate/monthly/SEDG.B1.HadCM3.2001-2100.tmp.tgz">www.alarmproject.net/climate/climate/monthly/SEDG.B1.HadCM3.2001-2100.tmp.tgz</a>
+            <a href="http://www.alarmproject.net/climate/climate/monthly/BAMBU.A2.HadCM3.2001-2100.tmp.tgz">www.alarmproject.net/climate/climate/monthly/BAMBU.A2.HadCM3.2001-2100.tmp.tgz</a></p>
+
+        <p>*** gdd … growing degree days above 5° Celsius [1] <a href="http://www.alarmproject.net/climate/climate/monthly/GRAS.A1FI.HadCM3.2001-2100.gdd.tgz">www.alarmproject.net/climate/climate/monthly/GRAS.A1FI.HadCM3.2001-2100.gdd.tgz</a>
+            <a href="http://www.alarmproject.net/climate/climate/monthly/SEDG.B1.HadCM3.2001-2100.gdd.tgz">www.alarmproject.net/climate/climate/monthly/SEDG.B1.HadCM3.2001-2100.gdd.tgz</a>
+            <a href="http://www.alarmproject.net/climate/climate/monthly/BAMBU.A2.HadCM3.2001-2100.gdd.tgz">www.alarmproject.net/climate/climate/monthly/BAMBU.A2.HadCM3.2001-2100.gdd.tgz</a></p>
+
+        <h2>Source</h2>
+        <a href="https://github.com/the-resa/alarma">
+            <img src="https://a248.e.akamai.net/assets.github.com/images/modules/header/logov7@4x.png?1323882804" height="40"/>
+        </a>
+
+        <h2>Team</h2>
+
+        <p>© <a href="https://github.com/mindbreaker">[Tom]</a> and
+            <a href="https://github.com/the-resa">[Terry]</a></p>
     </div>
-  </body>
+
+</body>
 </html>

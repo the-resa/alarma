@@ -39,7 +39,7 @@ describe Moment do
       :variable => Setup::VARIABLES[:pre])
     Value.create!(:result => 11.11, :coordinate => coord, :moment => moment, :setup => setup)
 
-    data = Moment.data(2003, 12, Setup::VARIABLES[:pre])
+    data = Moment.data(2003, 12, Setup::VARIABLES[:pre], Setup::ZONES[:europe], Setup::SCENARIOS[:bambu])
     
     data[coord.x].should be_an(Array)
     data[coord.y].should be_an(Array)
